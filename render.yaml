@@ -1,13 +1,11 @@
-
 services:
   - type: web
     name: padelkey-api
     env: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "python main.py"
+    startCommand: "gunicorn main:app"
     envVars:
       - key: SHOPIFY_SHOP_URL
         value: ${SHOPIFY_SHOP_URL}
       - key: SHOPIFY_API_KEY
         value: ${SHOPIFY_API_KEY}
-    
