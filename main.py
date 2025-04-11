@@ -22,3 +22,17 @@ def get_orders():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
+@app.route('/get_orders', methods=['GET'])
+def get_orders():
+    # URL per ottenere gli ordini
+    orders_url = f"https://{SHOP_URL}/admin/api/2023-01/orders.json"
+    
+    # Fai la richiesta a Shopify
+    response = requests.get(orders_url, headers=headers)
+    
+    # Se la richiesta va a buon fine
+    if response.status_code == 200:
+        orders = response.json()  # Ottieni gli ordini in formato JSON
+        return jsonify(orders)  # Ritorna gli ordini al cliente
+    else:
+        return jsonify({"error": "Impossibile recuperare gli ordini"}), 500
